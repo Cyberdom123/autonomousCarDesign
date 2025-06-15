@@ -1,0 +1,52 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "common",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "UNIT_TESTING": "OFF"
+            },
+            "environment": {
+                "CFLAGS": "-Wall -Wextra -Wpedantic -Wunused-parameter -Winit-self -Wcast-align -Wconversion -Wnull-dereference -Wduplicated-cond  -Wsign-conversion -Wlogical-op",
+                "CXXFLAGS": "-Wall -Wextra -Wpedantic -Wunused-parameter -Winit-self -Wcast-align -Wconversion -Wnull-dereference -Wduplicated-cond  -Wsign-conversion -Wlogical-op"
+            }
+        },
+        {
+            "name": "zephyr",
+            "displayName": "Zephyr",
+            "description": "Build for ARM",
+            "inherits": "common",
+            "cacheVariables": {
+                "BOARD_ROOT": "${sourceDir}",
+                "BOARD": "kitty",
+                "CONF_FILE": "${sourceDir}/prj.conf"
+            }
+        },
+        {
+            "name": "unit-tests",
+            "displayName": "Unit Tests",
+            "description": "Build for unit tests",
+            "inherits": "common",
+            "cacheVariables": {
+                "UNIT_TESTING": "ON"
+            }
+        }        
+    ],
+    "buildPresets": [
+        {
+            "name": "zephyr",
+            "description": "Zephyr",
+            "configurePreset": "zephyr"
+        },
+        {
+            "name": "unit-tests",
+            "description": "Unit Tests",
+            "configurePreset": "unit-tests"
+        }
+    ]
+  }
